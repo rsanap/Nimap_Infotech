@@ -1,0 +1,43 @@
+﻿@model IEnumerable<NimapInfotech.Models.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Product List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ProductId</th>
+            <th>ProductName</th>
+            <th>CategoryId</th>
+            <th>CategoryName</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductId</td>
+                <td>@product.ProductName</td>
+                <td>@product.CategoryId</td> 
+                <td>@product.Category.CategoryName</td> 
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="pagination">
+    @if (ViewBag.Page > 1)
+    {
+        <a href="@Url.Action("Index", "Product", new { page = ViewBag.Page - 1 })">&laquo; Previous</a>
+    }
+    @for (var i = 1; i <= ViewBag.TotalPages; i++)
+    {
+        <a href="@Url.Action("Index", "Product", new { page = i })" class="@(i == ViewBag.Page ? "active" : "")">@i</a>
+    }
+    @if (ViewBag.Page < ViewBag.TotalPages)
+    {
+        <a href="@Url.Action("Index", "Product", new { page = ViewBag.Page + 1 })">Next &raquo;</a>
+    }
+</div>
+<p>Total Products: @ViewBag.TotalProducts</p>
