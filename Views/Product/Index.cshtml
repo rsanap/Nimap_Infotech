@@ -1,9 +1,11 @@
-﻿@model IEnumerable<NimapInfotech.Models.Product>
+@model IEnumerable<NimapInfotech.Models.Product>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Product List";
 }
 
 <h2>Product List</h2>
+
+<a href="@Url.Action("Create", "Product")" class="btn btn-primary">Create Product</a>
 <table class="table">
     <thead>
         <tr>
@@ -11,6 +13,7 @@
             <th>ProductName</th>
             <th>CategoryId</th>
             <th>CategoryName</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -19,13 +22,25 @@
             <tr>
                 <td>@product.ProductId</td>
                 <td>@product.ProductName</td>
-                <td>@product.CategoryId</td> 
-                <td>@product.Category.CategoryName</td> 
+                <td>@product.CategoryId</td>
+                <td>
+                    @if (product.Category != null)
+                    {
+                        @product.Category.CategoryName
+                    }
+                    else
+                    {
+                        <span>Category not available</span>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "Product", new { id = product.ProductId })">Edit</a> |
+                    <a href="@Url.Action("Delete", "Product", new { id = product.ProductId })">Delete</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
-
 <div class="pagination">
     @if (ViewBag.Page > 1)
     {
